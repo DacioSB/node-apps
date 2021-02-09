@@ -1,0 +1,26 @@
+@url = http://127.0.0.1:3000/api/fornecedores
+@id = 4
+
+GET {{url}} HTTP/1.1
+Accept: application/xml
+###
+GET {{url}}/{{id}} HTTP/1.1
+Accept: application/json
+###
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "empresa": "docinho lives",
+    "email": "d@gmail",
+    "categoria": "racao"
+}
+###
+PUT {{url}}/{{id}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "empresa": "docinho confeccoes"
+}
+###
+DELETE {{url}}/{{id}} HTTP/1.1

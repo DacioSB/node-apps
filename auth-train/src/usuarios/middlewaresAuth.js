@@ -1,0 +1,63 @@
+const passport = require("passport");
+const Usuario = require("./usuarios-modelo");
+const tokens = require("./tokens");
+
+
+module.exports = {
+    local: (req, res, next) =>{
+        passport.authenticate("local", 
+        {session: false}, 
+        (error, usuario, info) =>{
+            if (error && error.name === "InvalidArgumentError") {
+                return res.status(401).json({error: error.message});
+            }
+            if (error) {
+                return res.status(500).json({error: error.message});
+            }
+            if (!usuario) {
+                return res.status(401).json();
+            }
+            req.user = usuario;
+            return next();
+        })(req, res, next);
+    } ,
+    bearer: (req, res, next) =>{
+        passport.authenticate(
+            "bearer",
+            {session: false},
+            (error, usuario, info) =>{
+                if (error && error.name === "JsonWebTokenError") {
+                    return res.status(401).json({error: error.message});
+                }
+                if (error && error.name === "TokenExpiredError") {
+                    return res.status(401).json({error: error.message, expiradoEm: error.expiredAt})
+                }
+                if (error) {
+                    return res.status(500).json({error: error.message});
+                }
+                if (!usuario) {
+                    return res.status(401).json();
+                }
+                req.user = usuario;
+                req.token = info.token;
+                return next();
+            }
+        )
+        (req, res, next)
+    },
+    async refresh(req, res, next){
+        try {
+            const {refreshToken} = req.body;
+            const id = await tokens.refresh.verify(refreshToken);
+            await tokens.refresh.invalidate(refreshToken);
+            req.user = await Usuario.buscaPorId(id);
+            return next();
+        } catch (error) {
+            if (error.name === "InvalidArgumentError") {
+                return res.status(401).json({error: error.message})
+            }else{
+                return res.status(500).json({error: error.message})
+            }
+        }
+    }
+}

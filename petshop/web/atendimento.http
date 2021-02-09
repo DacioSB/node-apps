@@ -1,0 +1,21 @@
+@localhost = http://127.0.0.1:3000
+@cpf = "10324960460"
+
+//Post
+POST {{localhost}}/atendimentos HTTP/1.1
+Content-Type: application/json
+
+{
+    "cliente": {{cpf}},
+    "pet" : "tarcisio",
+    "servico": "vacina",
+    "status": "pago",
+    "observacoes": "lorem ipsum",
+    "data": "25/12/2020"
+}
+###
+
+//GETS
+GET {{localhost}}/atendimentos HTTP/1.1
+###
+GET {{localhost}}/atendimentos/7 HTTP/1.1

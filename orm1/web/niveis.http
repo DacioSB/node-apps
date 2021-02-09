@@ -1,0 +1,34 @@
+@url = http://127.0.0.1:3000
+@id = 3
+
+//Gets
+GET {{url}}/niveis HTTP/1.1
+Accept: application/json
+###
+GET {{url}}/niveis/{{id}} HTTP/1.1
+Accept: application/json
+###
+//Posts
+POST {{url}}/niveis HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "nome": "capataz",
+    "ativo": false,
+    "email": "capataz@gmail",
+    "role": "segurança"
+}
+###
+//Puts
+PUT {{url}}/niveis/{{id}} HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "desc_nivel": "intermediario"
+}
+###
+//Deletes
+DELETE {{url}}/niveis/{{id}} HTTP/1.1
+Accept: application/json

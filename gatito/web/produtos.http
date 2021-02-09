@@ -1,0 +1,43 @@
+@url = http://127.0.0.1:3000/api/fornecedores
+@idFornecedor= 4
+@id=6
+//GETS
+GET {{url}}/{{idFornecedor}}/produtos HTTP/1.1
+Accept: application/json
+###
+GET {{url}}/{{idFornecedor}}/produtos/{{id}} HTTP/1.1
+Accept: application/json
+###
+//Posts
+POST {{url}}/{{idFornecedor}}/produtos HTTP/1.1
+Content-Type: application/json
+Accept: application/xml
+
+{
+    "titulo": "casinha",
+    "preco": 299.99,
+    "estoque": 20
+}
+###
+//PUTS
+PUT {{url}}/{{idFornecedor}}/produtos/{{id}} HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "preco": 22.90
+}
+###
+PUT {{url}}/{{idFornecedor}}/produtos/{{id}}/diminuir-estoque HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "quantidade": 250
+}
+###
+//Deletes
+DELETE {{url}}/{{idFornecedor}}/produtos/{{id}} HTTP/1.1
+###
+//Heads
+HEAD {{url}}/{{idFornecedor}}/produtos/{{id}} HTTP/1.1

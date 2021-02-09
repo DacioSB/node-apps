@@ -1,0 +1,72 @@
+@url = http://127.0.0.1:3000
+@id = 3
+@matriculaId = 1
+
+//Gets
+GET {{url}}/pessoas HTTP/1.1
+Accept: application/json
+###
+GET {{url}}/pessoas/active HTTP/1.1
+Accept: application/json
+###
+GET {{url}}/pessoas/{{id}} HTTP/1.1
+Accept: application/json
+###
+GET {{url}}/pessoas/{{id}}/matricula/{{matriculaId}} HTTP/1.1
+###
+GET {{url}}/pessoas/{{id}}/matricula HTTP/1.1
+Accept: application/json
+###
+GET {{url}}/pessoas/matricula/1/confirmadas HTTP/1.1
+Accept: application/json
+###
+GET {{url}}/pessoas/matricula/lotada HTTP/1.1
+Accept: application/json
+###
+//Posts
+POST {{url}}/pessoas HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "nome": "ca",
+    "ativo": false,
+    "email": "capataz@gmail.com",
+    "role": "segurança"
+}
+###
+POST {{url}}/pessoas/{{id}}/matricula HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "status": "confirmado",
+    "turma_id": 3
+}
+###
+//Puts
+PUT {{url}}/pessoas/{{id}} HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "ativo": false
+}
+###
+PUT {{url}}/pessoas/{{id}}/matricula/{{matriculaId}} HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "status": "cancelado"
+}
+###
+PUT {{url}}/pessoas/{{id}}/restore HTTP/1.1
+Accept: application/json
+###
+PUT {{url}}/pessoas/{{id}}/cancela HTTP/1.1
+Accept: application/json
+###
+//Deletes
+DELETE {{url}}/pessoas/{{id}} HTTP/1.1
+Accept: application/json
